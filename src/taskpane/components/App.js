@@ -125,6 +125,7 @@ export default class App extends React.Component {
       textToPlay: null,
       downloadActivate: false,
       currentlyPlaying: false,
+      startedPlaying: false,
       globalText: null,
     };
   }
@@ -331,7 +332,7 @@ export default class App extends React.Component {
           continue;
         }
       }
-      this.setState({ currentlyPlaying: false, downloadActivate: false });
+      this.setState({ currentlyPlaying: false, downloadActivate: false, startedPlaying: false });
     }
   }
 
@@ -340,31 +341,24 @@ export default class App extends React.Component {
    * Recieves the response from the server and plays the audios synchronously
    */
   processTextAndPlayAudio = async () => {
-    this.resetVariables();
-    if (this.currentlyPlaying == true) {
-      // console.log("Already playing");
-      // return;
-    } else if (this.gender == null || this.format == null) {
-      this.gender = "Male";
-      // this.format = "unicode";
+    console.log(this.state.startedPlaying);
+    // console.log(this.state.currentlyPlaying);
+    if (this.state.currentlyPlaying == false && this.state.startedPlaying == false) {
+      console.log("Here");
+      this.resetVariables();
+      this.textToPlay = null;
+      await this.getPlainTextFromWord();
+      await this.playNextChunk();
+    } else if (this.state.currentlyPlaying == true && this.state.startedPlaying == true) {
+      this.pauseAllAudio();
+    } else if (this.state.currentlyPlaying == false && this.state.startedPlaying == true) {
+      this.setState({ currentlyPlaying: true });
+      this.triggerPlayback();
     }
-    this.textToPlay = null;
-    await this.getPlainTextFromWord();
-    await this.playNextChunk();
   };
 
   playNextChunk = async () => {
-    if (this.currentlyPlaying == true) {
-      console.log("Already playing");
-      // return;
-    } else {
-      this.setState({ currentlyPlaying: true, downloadActivate: false });
-    }
-    if (responseAudios !== "" && !playing) {
-      this.triggerPlayback();
-    } else if (playerIndex !== 0 && !finishedPlaying) {
-      this.triggerPlayback();
-    }
+    this.setState({ currentlyPlaying: true, downloadActivate: false, startedPlaying: true });
 
     const chunks = this.chunkifyPlainText();
     let index = 0;
@@ -463,7 +457,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { type, format, gender, downloadActivate, currentlyPlaying } = this.state;
+    const { type, format, gender, downloadActivate, currentlyPlaying, startedPlaying } = this.state;
 
     return (
       <ThemeProvider theme={theme}>
