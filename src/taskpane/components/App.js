@@ -219,7 +219,9 @@ export default class App extends React.Component {
    * Clears all the text from the active document
    */
   handleClearButton = () => {
-    responseAudios[0].pause();
+    this.stopAllAudio();
+    this.resetVariables();
+    this.setState({ currentlyPlaying: false, startedPlaying: false, downloadActivate: false });
   };
 
   handleDownload = () => {
@@ -332,7 +334,7 @@ export default class App extends React.Component {
           continue;
         }
       }
-      this.setState({ currentlyPlaying: false, downloadActivate: false, startedPlaying: false });
+      this.setState({ currentlyPlaying: false, downloadActivate: true, startedPlaying: false });
     }
   }
 
