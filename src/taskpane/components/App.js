@@ -493,6 +493,7 @@ export default class App extends React.Component {
                       borderBottomLeftRadius: "8px",
                       width: "80px",
                     }}
+                    disabled={currentlyPlaying}
                   >
                     ANSI
                   </ToggleButton>
@@ -508,6 +509,7 @@ export default class App extends React.Component {
                       borderBottomRightRadius: "8px",
                       width: "80px",
                     }}
+                    disabled={currentlyPlaying}
                   >
                     UNICODE
                   </ToggleButton>
@@ -531,6 +533,7 @@ export default class App extends React.Component {
                       borderBottomLeftRadius: "8px",
                       width: "80px",
                     }}
+                    disabled={currentlyPlaying}
                   >
                     পুরুষ
                   </ToggleButton>
@@ -546,6 +549,7 @@ export default class App extends React.Component {
                       borderBottomRightRadius: "8px",
                       width: "80px",
                     }}
+                    disabled={currentlyPlaying}
                   >
                     নারী
                   </ToggleButton>
@@ -595,6 +599,7 @@ export default class App extends React.Component {
                     defaultValue={0}
                     onChange={this.handleSpeedChange}
                     inputProps={{ "aria-label": "Without label" }}
+                    disabled={currentlyPlaying}
                   >
                     <MenuItem value={-2}>-২x</MenuItem>
                     <MenuItem value={-1}>-১x</MenuItem>
@@ -613,6 +618,7 @@ export default class App extends React.Component {
                     value={this.speed}
                     onChange={this.handlePitchChange}
                     inputProps={{ "aria-label": "Without label" }}
+                    disabled={currentlyPlaying}
                   >
                     <MenuItem value="-2">-২x</MenuItem>
                     <MenuItem value={-1}>-১x</MenuItem>
